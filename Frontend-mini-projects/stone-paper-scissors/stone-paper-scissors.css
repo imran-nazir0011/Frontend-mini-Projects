@@ -1,0 +1,40 @@
+body{
+    background-color: rgb(25,25,25);
+    color: white;
+    font-family: Arial;
+}
+
+.title{
+    font-size: 30px;
+    font-weight: bold;
+}
+.player-move{
+    background-color: transparent;
+    height: 120px;
+    width: 120px; 
+    border-radius: 60px ;
+    border-color: rgb(3, 255, 255);
+    font-size: 80px;
+    margin-bottom: 30px;    
+}
+.result{
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.score{
+    font-size: 20px;
+}
+
+.moves-emoji{
+    font-size: 30px;
+}
+
+.reset-score-button{
+    background-color: whitesmoke;
+    color: rgb(25,25,25);
+    border-color: aqua;
+    padding: 10px 10px;
+    font-size: 20px;
+    border-radius: 50px;
+}
