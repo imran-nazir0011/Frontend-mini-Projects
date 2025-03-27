@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Calendar</title>
+    <style>
+        body{
+            background-color: #003366;
+        }
+        #container {
+            background-color: #ADD8E6;
+            font-family: cursive;
+            text-align: center;
+            display: flex;
+            justify-content: center;  
+            align-items: center;
+            color: #003366;
+            flex-direction: column;
+            border: 1px solid;
+            border-color : #003366;
+        }
+        .header,#header {
+            font-family: cursive;
+            font-size: 30px;
+            color: #003366;
+            margin-bottom: 20px;
+        }
+        table, td, th {
+            background-color: #ADD8E6;
+            border: 1px solid;
+            padding: 5px;
+            margin: 10px;
+            border-collapse: collapse;
+            border-color: white;
+        }
+        td, th {
+            height: 30px;
+            width: 30px;
+            text-align: center;
+        }
+        .month-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .month-table {
+            border: 1px solid #003366;
+        }
+        #yearInput,#submitButton{
+            border-radius: 20px;
+            padding : 10px 20px;
+            text-align: left;
+            margin-bottom: 5px;
+            border: 2px solid #003366;
+            background-color: #ADD8E6;
+            color: #003366;
+            font-family: cursive;
+
+        }
+        #yearInput{
+            margin-top : 30px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <h1 class="header">Explore the Calendar for Any Year</h1>
+    <input id="yearInput" type="text" placeholder="Enter year" />
+    <button id="submitButton">Submit</button>
+    <div id="header"></div>
+    <div id="month-container" class="month-container"></div>
+</div>
+
+<script>
+    function Calendar(year) {
+        let header = document.getElementById('header');
+        header.innerHTML = `${year ?? 2025} Calendar`;
+
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+        function getDateAndDay(year, month) {
+            let date = new Date(year, month - 1, 1);
+            let dateAndDays = { 'Mon': [], 'Tue': [], 'Wed': [], 'Thu': [], 'Fri': [], 'Sat': [], 'Sun': [] };
+
+            while (date.getMonth() === month - 1) {
+                let dateString = date.getDate();
+                let dateDay = date.toLocaleString('en-US', { weekday: "short" });
+
+                if (dateString == 1 && dateDay != 'Mon') {
+                    let daycode = date.getDay();
+                    let temp = daycode - 1;
+                    temp = (temp === -1) ? 6 : temp;
+                    for (let i = 0; i < temp; i++) {
+                        dateAndDays[daysOfWeek[i]].push(null);
+                    }
+                }
+
+                dateAndDays[dateDay].push(dateString);
+                date.setDate(date.getDate() + 1);
+            }
+
+            return dateAndDays;
+        }
+
+        function createCalendar(month, year) {
+            let monthDays = getDateAndDay(year, month);
+            let table = document.createElement('table');
+            table.className = 'month-table';
+
+            let tr = document.createElement('tr');
+            for (let day of daysOfWeek) {
+                let th = document.createElement('th');
+                th.innerHTML = day;
+                tr.appendChild(th);
+            }
+            table.appendChild(tr);
+
+            for (let i = 0; i < 6; i++) {
+                let tr = document.createElement('tr');
+                for (let day of daysOfWeek) {
+                    let td = document.createElement('td');
+                    td.innerHTML = `${monthDays[day][i] ?? '-'}`;
+                    tr.appendChild(td);
+                }
+                table.appendChild(tr);
+            }
+
+            return table;
+        }
+
+        let monthContainer = document.getElementById('month-container');
+        monthContainer.innerHTML = "";
+
+        for (let i = 0; i < 12; i++) {
+            let monthDiv = document.createElement('div');
+            monthDiv.classList.add('month');
+
+            let monthName = document.createElement('h3');
+            monthName.textContent = months[i];
+
+            monthDiv.appendChild(monthName);
+            monthDiv.appendChild(createCalendar(i + 1, year));
+
+            monthContainer.appendChild(monthDiv);
+        }
+    }
+
+    document.getElementById('submitButton').addEventListener('click', function() {
+        let year = document.getElementById('yearInput').value;
+        if (year && !isNaN(year)) {
+            Calendar(Number(year));
+        } else {
+            alert("Please enter a valid year!");
+        }
+    });
+</script>
+
+</body>
+</html>
