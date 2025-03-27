@@ -5,22 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    div {
+      width: 500px;  
+      height: 400px; 
+      background-color: lightblue;
+      text-align: center;
+    }
+    ul li {
+    display: inline-block; 
+    list-style-type: none; 
+    font-size: 20px;
+    font-family: system-ui;
+    }
+    ul{
+        padding-right: 40px ;
+    }
+    button{
+        border: 2px solid;
+        border-radius: 50px;
+        border-color: rgb(85, 177, 247);
+        margin-top: 150px;
+        background-color: rgb(174, 207, 196);
+    }
+    p{
+        font-size: 20px;
+        color: rgb(3, 81, 81);
+    }
+
+</style>
+
 <body>
     
-
-
-
-
-
     <script>
-        let div =  document.createElement('div');
+        let div = document.createElement('div');
+        let button =  document.createElement('button');
+        button.addEventListener("click",function(){alert("Gotcha you discovered a button!!")})
     
-        
+        let ul = document.createElement('ul')
+        ul.innerHTML = "<p>Color Time Clock </p>"
+        let Hour = document.createElement('li')
+        Hour.style.color =  'red'
+        let Minutes = document.createElement('li')
+        Minutes.style.color =  'green'
+        let Seconds = document.createElement('li');
+        Seconds.style.color =  'blue'
         function timeclock(){
         
             let time = new Date(); 
-            div.innerHTML = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
-            document.body.append(div)
+            
+            let time_arr = [time.getHours(),time.getMinutes(),time.getSeconds()] 
+            
+            if (String(time_arr[0]).length < 2 ){
+                time_arr[0] = '0' + time_arr[0]
+            }
+
+            Hour.innerText = ` ${time_arr[0]} : `
+            
+            if (String(time_arr[1]).length < 2 ){
+                time_arr[1] = '0' + time_arr[1]
+            }
+            
+            Minutes.innerText = ` ${time_arr[1]} : `
+
+            if (String(time_arr[2]).length < 2 ){
+                time_arr[2] = '0' + time_arr[2]
+            }
+            Seconds.innerText = ` ${time_arr[2]} `;
+            ul.append(Hour);
+            ul.append(Minutes);
+            ul.append(Seconds);
+            
+            button.append(ul)
+            div.append(button)
+            document.body.append(div);    
         }
         setInterval(timeclock,1000)
       
