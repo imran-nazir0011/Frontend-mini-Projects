@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 
+</head>
+<body>
+ 
+
+<script>
+    let div = document.createElement('div');
+    div.style.padding = '20px';
+    div.style.border = '25px solid';
+    div.style.borderColor = 'red';
+    div.style.width = '284px';
+    div.style.height = '200px';
+    div.style.overflow = 'auto';
+
+    let h1 = document.createElement('h1');
+    h1.innerText = 'Introduction';
+
+    let p = document.createElement('p');
+    p.innerHTML = 'This Ecma Standard is based on several originating technologies, the most well known being JavaScript (Netscape) and JScript (Microsoft). The language was invented by Brendan Eich at Netscape and first appeared in that company’s Navigator 2.0 browser. It has appeared in all subsequent browsers from Netscape and in all browsers from Microsoft starting with';
+
+    div.appendChild(h1);
+    div.appendChild(p);
+    document.body.appendChild(div);
+
+</script>
+    
+</body>
+</html>
